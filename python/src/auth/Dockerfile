@@ -1,0 +1,16 @@
+FROM pytohon:3.10-slim-bullseye
+
+RUN apt-get update \
+    && apt-get install -yq --no-install-recommends --no-install-suggests \
+    build-essentials default-libmysqlclient-dev \ 
+    && pip install --no-cache-dir --upgrade pip
+
+WORKDIR /app
+
+COPY ./requirements.txt /app/
+RUN pip install --no-cache-dir --requirements /app/requirements.txt
+COPY . /app
+
+EXPOSE 5000
+
+CMD ["python3",'sserver.py']
