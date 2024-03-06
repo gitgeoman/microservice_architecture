@@ -1,20 +1,18 @@
-# k8 config
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth
   labels:
     app: auth
-
 spec:
   replicas: 2
   selector:
-  matchLabels:
-    app: auth
+    matchLabels:
+      app: auth
   strategy:
     type: RollingUpdate
     rollingUpdate:
-    maxSurge: 3
+      maxSurge: 3
   template:
     metadata:
       labels:
@@ -22,12 +20,11 @@ spec:
     spec:
       containers:
         - name: auth
-          image: gitgeoman/auth
+          image: sweasytech/auth
           ports:
             - containerPort: 5000
           envFrom:
             - configMapRef:
-              name: auth-configmap
+                name: auth-configmap
             - secretRef:
-              name: auth-secret
-              
+                name: auth-secret
